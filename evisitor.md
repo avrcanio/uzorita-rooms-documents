@@ -22,10 +22,9 @@ Nakon potvrđenog check-ina (Confirm/Submit), sustav **automatski** šalje prija
 - FAILED
 
 ## UI (recepcija)
-Na detalju rezervacije (timeline i/ili uz gosta):
-- eVisitor: PENDING (npr. "Šaljem…")
-- eVisitor: SENT ("Primljeno") + vrijeme
-- eVisitor: FAILED (kratka poruka) + gumb "Pokušaj ponovno"
+Na detalju rezervacije:
+- Timeline event: eVisitor PENDING / SENT / FAILED
+- Badge uz **glavnog gosta**: PENDING / SENT / FAILED (brzo vidljivo stanje)
 
 ## Podaci (iz OCR + ručno potvrđenih polja)
 Koristimo širi set koji skupljamo:
