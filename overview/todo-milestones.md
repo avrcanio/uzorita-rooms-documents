@@ -136,30 +136,28 @@ Detaljna specifikacija i runbook: `docs/backend/specs/m1-foundation.md`.
 
 ---
 
-## M4 — Check-in wizard + OCR + gosti
+## M4 — OCR scan + guest update
 **120 h**
 - [ ] M4 zavrsen
 
 ### Status update (2026-02-13)
-- M4 je **in progress** (OCR foundation aktivan).
+- Wizard je izbacen iz scope-a.
 - Implementiran je odvojeni scan screen za gosta: `/reservations/[id]/guests/[guestId]/scan`.
 - Integriran je Microblink Browser SDK i backend ingest na `/api/reception/reservations/{id}/guests/{guestId}/ocr/`.
 - Uklonjen je PassportEye iz aktivnog flowa; provider je standardiziran na `microblink`.
 - Guest model i API su prosireni za dodatna dokument/MRZ polja.
+- M4 je funkcionalno zavrsen za OCR ingest flow; otvoren je samo formalni QA/runbook cleanup.
 
 ### Razrada (120 h)
-- [ ] `M4.1` Dizajnirati check-in wizard flow (koraci, validacije, draft state) — **10 h**
-- [ ] `M4.2` Dodati backend endpoint(e) za check-in workflow i tranzicije statusa — **12 h**
-- [ ] `M4.3` Uvesti room assignment logiku (odabir sobe, konflikti, dostupnost) — **8 h**
-- [ ] `M4.4` Implementirati guest editor u wizardu (add/edit/remove, primary guest pravila) — **12 h**
-- [ ] `M4.5` Upload ID dokumenta (front + backend) sa storage strategijom — **10 h**
-- [ ] `M4.6` OCR servis sloj (adapter + provider abstraction + timeout/retry) — **16 h**
-- [ ] `M4.7` Parsiranje OCR rezultata u strukturirani payload (ime, dokument, datum) — **10 h**
-- [ ] `M4.8` Manual review ekran za OCR fallback (ispravke i potvrda) — **8 h**
-- [ ] `M4.9` Persistiranje i audit: `IDDocument`, verifikacija, ko je potvrdio i kada — **8 h**
-- [ ] `M4.10` Check-in completion akcija (status -> `checked_in`, timestampevi, napomene) — **8 h**
-- [ ] `M4.11` Integracija wizard UI sa timeline i guest detail ekranima — **8 h**
-- [ ] `M4.12` Testovi (unit/integration), edge-case QA i runbook — **10 h**
+- [x] `M4.1` Dodati odvojenu OCR scan rutu po gostu i mobile-friendly povratak na detalj gosta — **16 h**
+- [x] `M4.2` Integrirati Microblink Browser SDK (kamera + automatsko skeniranje) — **20 h**
+- [x] `M4.3` Uspostaviti backend OCR ingest endpoint i validaciju provider-a — **14 h**
+- [x] `M4.4` Normalizirati OCR payload i mapirati polja u `Guest` model — **20 h**
+- [x] `M4.5` Prosiriti `Guest` model, serializer i guest detail UI za dokument/MRZ polja — **18 h**
+- [x] `M4.6` Dodati OCR audit (`OcrScanLog`, lista/statistika endpointi) — **10 h**
+- [x] `M4.7` Ukloniti PassportEye iz aktivnog flowa i standardizirati na `microblink` — **6 h**
+- [ ] `M4.8` Zavrsni QA smoke test (realni dokumenti + fallback unos) — **8 h**
+- [ ] `M4.9` Runbook i operativna dokumentacija za OCR greske/licencu/resources — **8 h**
 
 ### M4 Foundation (zavrseno)
 - [x] `M4.F1` Ukloniti inline OCR blok sa guest detail ekrana i ostaviti CTA `Skeniraj dokument`.
@@ -170,18 +168,17 @@ Detaljna specifikacija i runbook: `docs/backend/specs/m1-foundation.md`.
 - [x] `M4.F6` Prosiriti Guest detail formu i API serializer za nova OCR polja.
 
 ### Deliverables
-- [ ] Multi-step check-in wizard u recepcija UI.
-- [ ] CRUD gosta unutar rezervacije tokom check-in procesa.
-- [ ] Upload i OCR obrada ID dokumenta sa fallback ručnom korekcijom.
-- [ ] Jasni statusi: `expected -> checked_in` uz audit trag.
+- [x] OCR scan screen za gosta sa kamerom i Microblink SDK-om.
+- [x] Backend ingest endpoint za OCR payload i auto-update gosta.
+- [x] Prosirena guest forma za ručnu korekciju OCR podataka.
+- [x] OCR audit log za svaki scan pokusaj.
 - [ ] Operativna dokumentacija za OCR error handling i recepcija procedure.
 
 ### Acceptance kriteriji
-- [ ] Recepcija može završiti check-in za rezervaciju kroz wizard bez ručnog DB rada.
-- [ ] Za barem jedan testni dokument OCR autopopuni ključna polja gosta.
-- [ ] Kad OCR ne uspije, recepcija može ručno unijeti/korigirati podatke i nastaviti.
-- [ ] Nakon potvrde, rezervacija prelazi u `checked_in` i vidljivo je ko/kad je potvrdio.
-- [ ] Tok radi stabilno na mobilnom uređaju (upload dokumenta + potvrda).
+- [x] Za barem jedan testni dokument OCR autopopuni ključna polja gosta.
+- [x] Kad OCR ne uspije ili ne vrati sva polja, recepcija može ručno unijeti/korigirati podatke i spremiti.
+- [x] OCR rezultat se zapisuje u audit log sa statusom i payload podacima.
+- [ ] Tok je potvrden kroz zavrsni smoke test na mobilnom uređaju.
 
 ---
 
