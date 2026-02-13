@@ -1,5 +1,9 @@
 # Račun — PDF generiranje (MVP)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Odluka
 Nakon izdavanja računa sustav **automatski generira PDF**.
 

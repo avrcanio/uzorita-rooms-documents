@@ -1,5 +1,9 @@
 # Valuta (MVP)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Odluka
 U MVP-u sustav radi samo s jednom valutom:
 - **EUR**

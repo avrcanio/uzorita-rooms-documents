@@ -1,5 +1,9 @@
 # Fiskalizacija — globalno (MVP)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Cilj
 Račun se fiskalizira (FINA certifikat) i dobiva:
 - **Broj računa**

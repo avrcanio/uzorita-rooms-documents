@@ -1,5 +1,9 @@
 # Sync state (cursor) — booking_updated_at
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Odluka
 Cursor = booking_updated_at (ako API daje).
 

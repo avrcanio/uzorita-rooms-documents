@@ -1,5 +1,9 @@
 # Plaćanje (MVP + budući razvoj)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## MVP
 - Podržavamo **1 poslovni prostor / 1 naplatni uređaj**.
 - Na check-outu recepcija odabire način plaćanja:

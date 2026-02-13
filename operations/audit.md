@@ -1,5 +1,9 @@
 # Audit log (MVP) — kompletan payload
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Odluka
 Spremamo kompletan raw payload (JSON) iz Booking sinkronizacije.
 

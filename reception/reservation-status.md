@@ -1,5 +1,9 @@
 # Statusi rezervacije (model 2)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Koncept
 Imamo dva sloja:
 1) Booking status (OTA)

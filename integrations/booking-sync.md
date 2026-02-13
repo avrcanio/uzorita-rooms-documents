@@ -1,8 +1,17 @@
 # Booking sinkronizacija (MVP)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** On Hold
+
 ## Odabrano
 - Polling svakih **30 minuta**
 - gumb **Sync now** (ručno pokretanje sinkronizacije)
+
+## Status i smjer (2026-02-13)
+- Booking.com onboarding za nove connectivity providere je trenutno pauziran.
+- Ovaj dokument ostaje kao ciljna integracija kada Booking ponovo otvori onboarding.
+- Do tada MVP koristi email ingest pipeline (IMAP + parser) za rezervacije.
 
 ## Kako radi (sažeto)
 - sustav pamti `last_sync_at`

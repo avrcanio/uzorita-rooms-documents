@@ -1,5 +1,9 @@
 # Check-out + naplata + R1 + fiskalizacija (MVP)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Cilj
 Recepcija može završiti smještaj (check-out), evidentirati plaćanje i izdati R1 račun uz fiskalizaciju (FINA certifikat) i dobiti fiskalne identifikatore.
 

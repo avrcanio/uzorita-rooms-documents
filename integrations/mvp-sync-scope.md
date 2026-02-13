@@ -1,10 +1,19 @@
 # MVP scope — Booking read-only sync
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** On Hold
+
 ## Cilj
 U prvoj fazi sustav je read-only prema Booking.com:
 - povlačimo podatke (sobe + rezervacije)
 - spremamo ih lokalno u Django bazu
 - ništa ne mijenjamo na Bookingu (još)
+
+## Status i smjer (2026-02-13)
+- Plan je trenutno na cekanju zbog pauze Booking onboarding procesa za nove integracije.
+- Aktivni MVP fallback je ingest rezervacija iz booking emailova preko IMAP-a.
+- Ovaj scope se aktivira cim Booking ponovo krene prihvacati nove connectivity integracije.
 
 ## Što syncamo
 

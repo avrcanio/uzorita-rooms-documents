@@ -1,5 +1,9 @@
 # eVisitor — globalni flow (MVP)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Cilj
 Nakon potvrđenog check-ina (Confirm/Submit), sustav **automatski** šalje prijavu boravka u eVisitor (HR) i recepciji jasno pokaže je li prijava **poslana i primljena** (ack).
 

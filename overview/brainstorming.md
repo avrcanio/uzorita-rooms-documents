@@ -1,5 +1,9 @@
 # Uzorita Rooms — Brainstorming
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Cilj
 Interna aplikacija za vođenje soba i gostiju u objektu Uzorita.
 

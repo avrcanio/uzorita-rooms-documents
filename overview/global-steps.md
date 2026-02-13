@@ -1,5 +1,9 @@
 # Uzorita Rooms — globalni koraci (high level)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 Ovo je “mapa sustava”. Svaki korak ćemo kasnije razrađivati u zasebnim dokumentima.
 
 ## 1) Backend & infrastruktura

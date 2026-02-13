@@ -1,5 +1,9 @@
 # Broj računa — numeracija (MVP)
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Odluka
 Broj računa se generira **automatski** prema pravilu (bez ručnog unosa recepcije).
 

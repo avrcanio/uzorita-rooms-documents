@@ -1,5 +1,9 @@
 # Django Admin (MVP) — operativni pregled
 
+**Owner:** TBD
+**Last updated:** 2026-02-13
+**Status:** Draft
+
 ## Odluka
 Za MVP koristimo Django Admin za:
 - pregled izdanih računa
