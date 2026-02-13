@@ -1,30 +1,31 @@
 # eVisitor — globalni flow (MVP)
 
 ## Cilj
-Nakon potvrđenog check-ina (Confirm/Submit), sustav šalje prijavu boravka u **eVisitor (HR)**.
+Nakon potvrđenog check-ina (Confirm/Submit), sustav **automatski** šalje prijavu boravka u eVisitor (HR) i recepciji jasno pokaže je li prijava **poslana i primljena** (ack).
 
 ## Kada se šalje
-- **tek nakon Confirm/Submit** u check-in wizardu
-- kad se kasnije doda dodatni gost: šalje se prijava i za tog gosta (po potrebi)
+- automatski odmah nakon Confirm/Submit u check-in wizardu
+- kad se kasnije doda dodatni gost: automatski slanje i za tog gosta (po potrebi)
 
 ## Flow (globalno)
 1) Check-in završen (glavni gost potvrđen)
-2) Sustav kreira zapis: **eVisitor PENDING**
-3) Pokušaj slanja u eVisitor
-4) Rezultat:
-   - **SENT** → označi kao prijavljeno (spremi potvrdu/identifikator ako postoji)
-   - **FAILED** → označi grešku + omogućiti retry
+2) Sustav postavi status: eVisitor PENDING
+3) Sustav pošalje prijavu u eVisitor
+4) Sustav primi odgovor (ack)
+5) Rezultat:
+   - SENT (primljeno/OK) → označi prijavljeno + spremi identifikator/potvrdu ako postoji
+   - FAILED → označi grešku + omogućiti retry
 
 ## Statusi
-- `PENDING`
-- `SENT`
-- `FAILED`
+- PENDING
+- SENT (poslano i primljeno)
+- FAILED
 
 ## UI (recepcija)
-Na detalju rezervacije (timeline i/ili na gostu):
-- eVisitor: PENDING
-- eVisitor: SENT (vrijeme)
-- eVisitor: FAILED (kratka poruka) + gumb **Pokušaj ponovno**
+Na detalju rezervacije (timeline i/ili uz gosta):
+- eVisitor: PENDING (npr. "Šaljem…")
+- eVisitor: SENT ("Primljeno") + vrijeme
+- eVisitor: FAILED (kratka poruka) + gumb "Pokušaj ponovno"
 
 ## Podaci (iz OCR + ručno potvrđenih polja)
 Koristimo širi set koji skupljamo:
@@ -35,8 +36,8 @@ Koristimo širi set koji skupljamo:
 - OIB (ako postoji / ručno)
 
 ## Audit
-- bilježimo svaki pokušaj slanja (vrijeme, rezultat, poruka)
+- bilježimo svaki pokušaj slanja (vrijeme, korisnik, rezultat, poruka)
 - spremamo request/response payload (bez slika osobnih)
 
 ## Napomena
-Detalji protokola/autentikacije eVisitor rješavaju se tijekom kodiranja, prema službenoj specifikaciji i pristupu.
+Detalji protokola/autentikacije eVisitor implementiraju se tijekom kodiranja prema službenoj specifikaciji i pristupu.
