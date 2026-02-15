@@ -107,11 +107,19 @@ Copy code
 
 Ako je hold već iskorišten u `confirm`, vratiti booking snapshot kako bi frontend mogao odmah redirectati.
 
+- Ako je `booking.status=PENDING_PAYMENT`, vratiti i `payment` snapshot (za countdown + retry bez dodatnih poziva).
+
 ```json
 {
   "hold_status": "CONSUMED",
   "booking": {
     "booking_code": "UZR-ABCDEFGH",
-    "status": "PENDING_PAYMENT"
+    "status": "PENDING_PAYMENT",
+    "payment": {
+      "required": true,
+      "expires_at": "2026-06-01T12:15:00Z",
+      "order_code": "1234567890123456",
+      "payment_url": "https://www.vivapayments.com/web/checkout?ref=1234567890123456"
+    }
   }
 }
