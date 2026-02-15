@@ -1,0 +1,54 @@
+# Hold snapshot API (booking web)
+
+**Last updated:** 2026-02-16  
+**Status:** Draft
+
+Cilj: `GET /public/holds/{hold_token}` vraća snapshot potreban da `/checkout` može renderati bez dodatnih poziva (osim `quote` i eventualno `confirm`).
+
+## Zašto snapshot
+- checkout uvijek zahtijeva `hold`
+- refresh mora zadržati isti hold
+- frontend treba sve podatke za UI: sobe, datume, gosti, cijene (bez taksi), te kontrolu tajmera
+
+## Endpoint
+`GET /public/holds/{hold_token}`
+
+### Response (ACTIVE)
+```json
+{
+  "hold_status": "ACTIVE",
+  "hold_expires_at": "2026-06-01T12:10:00Z",
+  "checkin": "2026-07-12",
+  "checkout": "2026-07-16",
+  "nights": 4,
+  "adults": 2,
+  "children": 1,
+  "rooms": [
+    {
+      "room_id": "dk",
+      "room_slug": "deluxe-kingsize",
+      "room_name": "Deluxe kingsize",
+      "adults": 2,
+      "children": 1,
+      "pricing": {
+        "currency": "EUR",
+        "nights": 4,
+        "accommodation_total": 420,
+        "avg_per_night": 105,
+        "taxes_excluded": true
+      }
+    }
+  ],
+  "pricing": {
+    "currency": "EUR",
+    "nights": 4,
+    "accommodation_total": 420,
+    "taxes_excluded": true,
+    "tax_note": "Boravišna pristojba se obračunava na checkoutu."
+  },
+  "payment_policy": {
+    "payment_required": true,
+    "reason": "HIGH_SEASON",
+    "high_season_months": [6, 7, 8, 9]
+  }
+}
