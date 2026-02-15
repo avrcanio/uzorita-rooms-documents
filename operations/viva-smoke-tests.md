@@ -5,6 +5,11 @@
 
 Cilj: kratki testovi koji potvrđuju da booking flow radi end-to-end, s obaveznim plaćanjem u visokoj sezoni.
 
+## Odluke (za ove testove)
+- Ako plaćanje ne uspije: booking ostaje `PENDING_PAYMENT` (retry bez kreiranja nove rezervacije).
+- `orderCode` se tretira kao string.
+
+
 ## Preduvjeti
 - booking web radi: search → room → checkout → confirmation
 - backend ima:
