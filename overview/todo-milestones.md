@@ -1,8 +1,8 @@
 # Uzorita Rooms — TODO & Milestones (procjena sati)
 
 **Owner:** TBD
-**Last updated:** 2026-02-13
-**Status:** Closed (baseline update 2026-02-13)
+**Last updated:** 2026-02-15
+**Status:** Active
 
 Procjene su **grube** i odnose se na *programiranje*.
 
@@ -75,24 +75,28 @@ Detaljna specifikacija i runbook: `docs/backend/specs/m1-foundation.md`.
 - [x] `M2.1` Definisati `communications` app i modele (`InboundEmail`, `OutboundEmail`, `EmailAttachment`, `ParseError`) — **8 h**
 - [x] `M2.2` Dodati IMAP konfiguraciju preko env varijabli (`IMAP_HOST`, `IMAP_PORT`, `IMAP_USER`, `IMAP_PASSWORD`, `IMAP_FOLDER`) — **3 h**
 - [x] `M2.3` Implementirati IMAP ingest management komandu (fetch unread + Message-ID dedupe) — **10 h**
-- [ ] `M2.4` Parsirati Booking reservation email template (new/modify/cancel) u normalizirani payload — **10 h**
-- [ ] `M2.5` Mapirati parsed payload u `reception.Reservation` + `reception.Guest` (idempotent update) — **8 h**
-- [ ] `M2.6` Implementirati status workflow (`parsed`, `partial`, `failed`) + retry mehanizam — **4 h**
+- [x] `M2.4` Parsirati Booking reservation email template (new/modify/cancel) u normalizirani payload — **10 h**
+- [x] `M2.5` Mapirati parsed payload u `reception.Reservation` + `reception.Guest` (idempotent update) — **8 h**
+- [x] `M2.6` Implementirati status workflow (`parsed`, `partial`, `failed`) + retry/reprocess mehanizam — **4 h**
 - [ ] `M2.7` Dodati admin review queue za `partial/failed` emailove i ručnu korekciju — **5 h**
 - [ ] `M2.8` Dodati audit log i osnovne metrike (broj processed/failed po run-u) — **2 h**
+- [x] `M2.9` Periodic worker job: `run_booking_pipeline` (`fetch` + `process`) — **3 h**
+- [x] `M2.10` Podrška za multi-room Booking rezervacije (više soba u jednom mailu) — **3 h**
+- [x] `M2.11` Otkazivanje multi-room rezervacija (cancel sve `external_id` varijante) — **1 h**
+- [x] `M2.12` Guest email + nationality ISO2 (best-effort mapping) — **2 h**
 
 ### Deliverables
 - [x] `communications` Django app sa migracijama.
 - [x] IMAP ingest komanda (`python manage.py fetch_booking_emails`) i parser servis.
-- [ ] Idempotentan upis rezervacija i gostiju iz emailova.
-- [ ] Admin ekran za pregled i ručnu obradu neuspješnih parser slučajeva.
-- [ ] Runbook dokumentacija za mailbox setup i operativni troubleshooting.
+- [x] Idempotentan upis rezervacija i gostiju iz emailova (uklj. multi-room).
+- [ ] Admin ekran za pregled i ručnu obradu neuspješnih parser slučajeva (workflow).
+- [x] Runbook dokumentacija za mailbox setup i operativni troubleshooting (`docs/operations/booking-ingest.md`, `docs/operations/reprocess-emails.md`).
 
 ### Acceptance kriteriji
-- [ ] Sustav povuče nove mailove iz `room_reservations@uzorita.hr` bez duplog upisa.
-- [ ] Za poznati Booking email template parser uspješno popuni ključna polja rezervacije.
-- [ ] Izmjena i otkaz rezervacije iz maila ažurira postojeći zapis (po external ID-u).
-- [ ] `partial/failed` slučajevi su vidljivi u adminu i mogu se ručno završiti.
+- [x] Sustav povuče nove mailove iz `room_reservations@uzorita.hr` bez duplog upisa.
+- [x] Za poznati Booking email template parser uspješno popuni ključna polja rezervacije.
+- [x] Izmjena i otkaz rezervacije iz maila ažurira postojeći zapis (po external ID-u).
+- [x] `partial/failed` slučajevi su vidljivi u adminu (filter `parse_status`).
 - [ ] Postoji log svakog ingest run-a sa brojem obrađenih i neuspjelih poruka.
 
 ---
@@ -113,19 +117,23 @@ Detaljna specifikacija i runbook: `docs/backend/specs/m1-foundation.md`.
 - [ ] `M3.2` PWA osnova (`manifest`, service worker, installability, icons) — **8 h**
 - [x] `M3.3` Auth flow za recepciju (login/logout + protected routes) — **8 h**
 - [x] `M3.4` Timeline ekran dolazaka/odlazaka (lista rezervacija po danu) — **12 h**
-- [ ] `M3.5` Filteri i pretraga (status, datum, ime gosta, external ID) — **6 h**
+- [x] `M3.5` Filteri i pretraga (status + search: gost/soba/external ID) — **6 h**
 - [x] `M3.6` Detalj rezervacije ekran (gosti, status, ključni podaci) — **8 h**
 - [x] `M3.7` UX za mobilni rad na recepciji (responsive, touch-first, brze akcije) — **7 h**
-- [ ] `M3.8` Error/loading/empty states + global notifications — **4 h**
+- [x] `M3.8` Error/loading/empty states — **4 h**
 - [x] `M3.9` Integracija sa backend endpointima za reservation timeline — **4 h** (foundation: API docs/schema + routing)
 - [ ] `M3.10` QA i smoke test na desktop + mobilnim viewportima — **3 h**
+- [x] `M3.11` Rooms calendar ekran: `/calendar/rooms` (month nav + modal izbor mjeseca) — **6 h**
+- [x] `M3.12` Country flags u timeline karticama (flag-icons) — **1 h**
 
 ### Deliverables
 - [ ] Frontend recepcija aplikacija sa PWA mogućnošću instalacije.
 - [x] Timeline ekran koji prikazuje rezervacije i osnovne statuse.
 - [x] Detalj rezervacije ekran povezan na backend podatke.
 - [x] Auth za recepcijske korisnike i zaštita ruta.
-- [ ] Operativni UI states (loading/error/empty) spremni za produkcijski rad.
+- [x] Operativni UI states (loading/error/empty) spremni za produkcijski rad.
+- [x] Rooms calendar ekran `/calendar/rooms`.
+- [x] Dokumentacija za recepcija UI (kratki runbook) (`docs/frontend/reception-ui.md`, `docs/frontend/calendar-rooms.md`).
 
 ### Acceptance kriteriji
 - [x] Korisnik se može prijaviti i odjaviti kroz recepcija UI.
@@ -172,7 +180,7 @@ Detaljna specifikacija i runbook: `docs/backend/specs/m1-foundation.md`.
 - [x] Backend ingest endpoint za OCR payload i auto-update gosta.
 - [x] Prosirena guest forma za ručnu korekciju OCR podataka.
 - [x] OCR audit log za svaki scan pokusaj.
-- [ ] Operativna dokumentacija za OCR error handling i recepcija procedure.
+- [ ] Operativna dokumentacija za OCR error handling i recepcija procedure (`docs/operations/ocr-runbook.md`).
 
 ### Acceptance kriteriji
 - [x] Za barem jedan testni dokument OCR autopopuni ključna polja gosta.

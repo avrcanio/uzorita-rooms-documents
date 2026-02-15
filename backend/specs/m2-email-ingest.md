@@ -1,8 +1,8 @@
 # M2 Email Ingest Spec (IMAP + Parser)
 
 **Owner:** TBD
-**Last updated:** 2026-02-13
-**Status:** In Progress
+**Last updated:** 2026-02-15
+**Status:** Implemented (MVP), ongoing improvements
 
 ## Kontekst
 - Booking.com onboarding za nove connectivity integracije je trenutno pauziran.
@@ -20,6 +20,15 @@
 - Deduplikacija:
   - po `Message-ID` (`InboundEmail.message_id` je unique).
 - Admin registracija communications modela je aktivna.
+- Booking parser:
+  - normalizira HTML -> tekst (strip style/script, br->newline)
+  - prepoznaje `new/modify/cancel`
+  - podržava multi-room mailove (više soba u jednom emailu)
+  - best-effort mapiranje nationality -> ISO2
+- Booking pipeline:
+  - `python manage.py process_booking_emails` mapira payload u `reception.Reservation` + `reception.Guest`
+  - idempotent update po `external_id`
+  - cancel email otkazuje i multi-room rezervacije (sufiksi `-2`, `-3`, ...)
 
 ## Runtime konfiguracija (env)
 - `MAILBOX_EMAIL`
@@ -41,15 +50,23 @@ cd /opt/stacks/uzorita/rooms/code/backend
 docker compose run --rm django sh -lc "pip install --no-cache-dir -r requirements.txt && python manage.py fetch_booking_emails --limit 50 --mark-seen"
 ```
 
-## Cron job
-- Aktivni raspored: svake 2 minute.
+## Periodic worker (production-like)
+Koristimo long-running worker container (`booking-worker`) koji vrti:
+- fetch (IMAP): `fetch_booking_emails`
+- process (DB): `process_booking_emails`
 
-```cron
-*/2 * * * * cd /opt/stacks/uzorita/rooms/code/backend && docker compose run --rm django sh -lc "pip install --no-cache-dir -r requirements.txt >/dev/null && python manage.py fetch_booking_emails --limit 50 --mark-seen" >> /var/log/uzorita-mail-sync.log 2>&1
+Komanda:
+```bash
+cd /opt/stacks/uzorita/rooms/code/backend
+docker compose up -d booking-worker
+docker logs -f uzorita-booking-worker
 ```
 
-- Log datoteka:
-  - `/var/log/uzorita-mail-sync.log`
+Jednokratno pokretanje (korisno za cron/manual):
+```bash
+cd /opt/stacks/uzorita/rooms/code/backend
+docker compose run --rm django sh -lc "pip install --no-cache-dir -r requirements.txt && python manage.py run_booking_pipeline --once --fetch-limit 50 --process-limit 50 --mark-seen"
+```
 
 ## Mail DNS status (uzorita.hr)
 - DKIM:
@@ -62,7 +79,5 @@ docker compose run --rm django sh -lc "pip install --no-cache-dir -r requirement
   - `v=spf1 include:_spf.mail.hostinger.com ~all`
 
 ## Otvoreno (sljedece)
-- Parser Booking template-a (`new/modify/cancel`) u strukturirani payload.
-- Mapiranje payload-a na `reception.Reservation` i `reception.Guest`.
-- Status workflow: `parsed`, `partial`, `failed`.
-- Admin queue za `partial/failed` sa ručnom korekcijom.
+- Operativni audit log run-a (stats per run) + metrika.
+- Admin “review queue” za `partial/failed` sa predloženim ispravcima i ručnim finalize.
