@@ -1,4 +1,4 @@
-# Otkaz rezervacije — sezonska politika
+9# Otkaz rezervacije — sezonska politika
 
 **Last updated:** 2026-02-15  
 **Status:** Draft
@@ -47,3 +47,31 @@ Primjer:
   - `cancellable=false` (preporuka) ili tretirati kao 90% — odaberi u implementaciji
 - Ako rezervacija prelazi preko više mjeseci:
   - MVP: gledaj samo check-in mjesec
+
+Korak 2 — Nadopuni cancel “preview” response
+U GET /public/bookings/cancel/preview?token=... vrati još:
+fee_percent
+fee_amount
+policy_note
+Primjer:
+Json
+Copy code
+{
+  "booking_code": "UZR-ABCDEFGH",
+  "cancellable": true,
+  "fee_percent": 50,
+  "fee_amount": 210,
+  "policy_note": "Visoka sezona: otkaz 8–29 dana prije dolaska nosi naknadu 50% (računa se na smještaj).",
+  "expires_at": "..."
+}
+Korak 3 — UX na /cancel?token=...
+Prije gumba “Potvrdi otkaz” pokaži blok:
+“Naknada za otkaz: 50% (210 €)”
+“Plaćanje po dolasku — naknada se može naplatiti prema pravilima objekta.”
+checkbox: “Razumijem uvjete otkaza” (da smanjiš prigovore)
+Korak 4 — Spremi naknadu u booking kod otkaza
+Kad gost potvrdi otkaz, spremi snapshot u booking:
+cancelled_at
+cancellation_fee_percent
+cancellation_fee_amount
+cancellation_policy_version (opcionalno, ali korisno)
