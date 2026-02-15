@@ -101,3 +101,17 @@ Md
 Copy code
 - Ako je hold nastao iz kombinacije soba, `combo.allocation` je obavezan i predstavlja izvor istine za raspored gostiju po sobama.
 - `rooms[].adults/children` mora odgovarati `combo.allocation`.
+
+
+### 3) CONSUMED
+
+Ako je hold već iskorišten u `confirm`, vratiti booking snapshot kako bi frontend mogao odmah redirectati.
+
+```json
+{
+  "hold_status": "CONSUMED",
+  "booking": {
+    "booking_code": "UZR-ABCDEFGH",
+    "status": "PENDING_PAYMENT"
+  }
+}
