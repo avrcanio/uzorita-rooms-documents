@@ -1,4 +1,4 @@
-# Hold snapshot API (booking web)
+8# Hold snapshot API (booking web)
 
 **Last updated:** 2026-02-16  
 **Status:** Draft
@@ -52,3 +52,28 @@ Cilj: `GET /public/holds/{hold_token}` vraća snapshot potreban da `/checkout` m
     "high_season_months": [6, 7, 8, 9]
   }
 }
+
+Response (EXPIRED)
+HTTP 410
+Json
+Copy code
+{
+  "hold_status": "EXPIRED",
+  "message": "Hold je istekao. Molimo odaberite datume ponovno."
+}
+Response (CONSUMED)
+Ako je hold već iskorišten u confirm, vrati booking snapshot:
+Json
+Copy code
+{
+  "hold_status": "CONSUMED",
+  "booking": {
+    "booking_code": "UZR-ABCDEFGH",
+    "status": "PENDING_PAYMENT"
+  }
+}
+Napomene
+Snapshot cijene su bez boravišne pristojbe.
+quote endpoint računa boravišnu pristojbu kad korisnik unese DOB djece.
+confirm endpoint vraća hold_status + booking stanje (kako je dogovoreno).
+hold_expires_at vraćati samo kad je hold_status=ACTIVE.
