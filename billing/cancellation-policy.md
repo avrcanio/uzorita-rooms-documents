@@ -75,3 +75,50 @@ cancelled_at
 cancellation_fee_percent
 cancellation_fee_amount
 cancellation_policy_version (opcionalno, ali korisno)
+
+# Otkaz rezervacije — sezonska politika + refund (visoka sezona)
+
+**Last updated:** 2026-02-15  
+**Status:** Draft
+
+## Definicija sezone (MVP)
+- **Visoka sezona:** 6, 7, 8, 9 mjesec (lipanj–rujan)
+- **Niska sezona:** ostalo
+- Sezona se određuje po **check-in datumu**.
+
+## Pravila otkaza
+
+### Niska sezona
+- Otkaz u bilo kojem trenutku
+- Naknada: **0%**
+
+### Visoka sezona (penali po danima do check-in-a)
+Neka je:
+`days_before = (checkin_date - today_date).days` (računati po datumu, zona Europe/Zagreb)
+
+- `days_before >= 30` → naknada **0%**
+- `8 <= days_before <= 29` → naknada **50%**
+- `0 <= days_before <= 7` → naknada **90%**
+
+## Baza za naknadu
+Naknada se računa na **cijenu smještaja** (`accommodation_total`), ne na boravišnu pristojbu.
+
+Primjer: smještaj 420 €
+- 50% → 210 €
+- 90% → 378 €
+
+## Refund logika (jer je visoka sezona plaćena online)
+U visokoj sezoni je `paid_amount = accommodation_total` (MVP).
+
+- `fee_amount = paid_amount * fee_percent`
+- `refund_amount = paid_amount - fee_amount`
+
+Primjer:
+- fee 50% → refund 50%
+- fee 90% → refund 10%
+
+## Edge cases
+- Ako je booking `PENDING_PAYMENT` (nije plaćen) i korisnik otkaže:
+  - samo `CANCELLED`, nema refund
+- Ako je `days_before < 0`:
+  - i dalje dopuštaš online otkaz, ali tretiraš kao 90% (ili posebno pravilo, po želji)
