@@ -19,3 +19,22 @@ Cilj:
 Napomene:
 - `orderCode` tretirati kao string
 - booking u visokoj sezoni postaje CONFIRMED tek nakon webhooka
+
+# Viva.com — setup checklist (MVP)
+
+Cilj:
+- Visoka sezona (check-in 6–9): obavezno online plaćanje (kad Viva bude spremna).
+- Niska sezona: plaćanje po dolasku.
+
+Checklist:
+1) demo → prod
+2) Payment Source + `sourceCode`
+3) API credsi
+4) success/fail URL-ovi
+5) webhook `POST /webhooks/payments/viva`
+6) test success/fail/timeout/cancel+refund
+7) prod smoke test
+
+Napomene:
+- `orderCode` kao string
+- `PENDING_PAYMENT -> CONFIRMED` samo preko webhooka
