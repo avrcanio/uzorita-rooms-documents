@@ -77,3 +77,27 @@ Snapshot cijene su bez boravišne pristojbe.
 quote endpoint računa boravišnu pristojbu kad korisnik unese DOB djece.
 confirm endpoint vraća hold_status + booking stanje (kako je dogovoreno).
 hold_expires_at vraćati samo kad je hold_status=ACTIVE.
+
+
+Korak 1 — Što točno dodaješ u snapshot response
+U ACTIVE response dodaj objekt:
+Json
+Copy code
+"combo": {
+  "combo_id": "c1",
+  "allocation": {
+    "triple": { "adults": 2, "children": 2 },
+    "d2a": { "adults": 2, "children": 0 },
+    "dk": { "adults": 2, "children": 0 }
+  }
+}
+I na razini rooms[] već imaš adults/children per room — to mora biti konzistentno s combo.allocation.
+Korak 2 — Spremi/izmijeni dokument u repo
+U backend/specs/hold-snapshot.md dopiši sekciju (ili zamijeni primjer) da eksplicitno kaže:
+ako je hold nastao iz kombinacije → vraća combo.allocation
+checkout ne računa ništa sam, samo rendera snapshot
+Ako želiš, evo kratkog dodatka koji zalijepiš u “Napomene”:
+Md
+Copy code
+- Ako je hold nastao iz kombinacije soba, `combo.allocation` je obavezan i predstavlja izvor istine za raspored gostiju po sobama.
+- `rooms[].adults/children` mora odgovarati `combo.allocation`.
