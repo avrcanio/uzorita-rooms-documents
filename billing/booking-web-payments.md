@@ -51,3 +51,21 @@ Ovaj dokument definira pravila plaćanja na `booking.uzorita.hr`.
 Ako nije plaćeno unutar npr. 15 min:
 - `PENDING_PAYMENT -> EXPIRED`
 - oslobodi availability
+
+mjenjam pravilo ovo gornje ću implementirati kasnije
+
+# Booking web — plaćanje (postpaid / pay on arrival)
+
+**Last updated:** 2026-02-16  
+**Status:** Active (MVP)
+
+## MVP pravilo
+- Plaćanje je **po dolasku** (postpaid).
+- Dozvoljene metode:
+  - **Kartica po dolasku**
+  - **Gotovina po dolasku**
+- Nema online plaćanja u MVP-u (Viva nije dio MVP-a).
+
+## Impl. napomena
+- `POST /public/bookings/confirm` kreira booking kao `CONFIRMED` (ako je dostupno).
+- I dalje koristiti `HOLD` (10 min) da se spriječi overbooking dok korisnik ispunjava checkout.
