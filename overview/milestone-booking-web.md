@@ -138,18 +138,12 @@ Cilj: public booking web u Next.js, s dostupnošću, multi-room combo ponudama, 
   - [ ] visoka sezona (6–9) → `PENDING_PAYMENT` + `payment_url`
 - [ ] Booking code `UZR-XXXXXXXX` (unique)
 
-## 6) Viva.com (Smart Checkout) — visoka sezona
+## MVP politika: postpaid + free cancellation
 
-- [ ] Viva setup:
-  - [ ] Payment Source + `sourceCode`
-  - [ ] demo credentials
-  - [ ] prod credentials
-- [ ] Kreiranje payment ordera na confirmu (visoka sezona)
-- [ ] Webhook: `POST /webhooks/payments/viva`
-  - [ ] signature verification
-  - [ ] `PENDING_PAYMENT -> CONFIRMED`
-  - [ ] spremiti `orderCode` (string) + transaction id
-- [ ] Timeout: PENDING_PAYMENT 15 min → EXPIRED + oslobodi availability
+- [ ] Postaviti pravilo plaćanja: kartica/gotovina po dolasku (nema online plaćanja)
+- [ ] `confirm` uvijek vraća `CONFIRMED` (nema `PENDING_PAYMENT`)
+- [ ] Politika otkaza: 0% fee, otkaz bilo kada
+- [ ] `cancel/preview` uvijek vraća `fee_percent=0`
 
 ## 7) Email
 
