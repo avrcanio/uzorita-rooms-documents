@@ -5,6 +5,11 @@
 
 Cilj: `GET /public/holds/{hold_token}` vraća snapshot potreban da `/checkout` može renderati bez dodatnih poziva (osim `quote` i eventualno `confirm`).
 
+## Preduvjeti
+
+- confirmation page radi polling na `GET /public/bookings/confirmation?code=...`
+
+
 ## Zašto snapshot
 - checkout uvijek zahtijeva `hold`
 - refresh mora zadržati isti hold
