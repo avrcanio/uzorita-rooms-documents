@@ -1,4 +1,4 @@
-9# Otkaz rezervacije — sezonska politika
+# Otkaz rezervacije — sezonska politika
 
 **Last updated:** 2026-02-15  
 **Status:** Draft
@@ -122,3 +122,17 @@ Primjer:
   - samo `CANCELLED`, nema refund
 - Ako je `days_before < 0`:
   - i dalje dopuštaš online otkaz, ali tretiraš kao 90% (ili posebno pravilo, po želji)
+
+mijenjam pravilo ovo gonje ću raditi kasnije
+
+# Otkaz rezervacije — politika (MVP)
+
+**Last updated:** 2026-02-16  
+**Status:** Active (MVP)
+
+## MVP pravilo
+- Otkaz je moguć **bilo kada**.
+- Naknada za otkaz: **0%** (free cancellation).
+
+## Impl. napomena
+- Public cancel flow ostaje (email link), ali `cancel/preview` uvijek vraća `fee_percent=0`.
