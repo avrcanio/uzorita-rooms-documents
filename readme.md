@@ -1,12 +1,15 @@
 # Uzorita Rooms - Documentation
 
 **Owner:** TBD
-**Last updated:** 2026-02-13
+**Last updated:** 2026-05-14
 **Status:** Draft
 
 Ovaj folder je organizovan po domenima, tako da su odluke i specifikacije lakse za pronalazenje i odrzavanje.
 
 ## Changelog
+
+### 2026-05-14
+- Dodan backend `POST /api/v1/scan/` (PaddleOCR + MRZ, audit `DocumentScanLog`, bez izmjene `Guest`). Spec: `backend/specs/ocr-paddle-scan-api.md`.
 
 ### 2026-02-13
 - Reorganizovana dokumentacija po domenima i uveden centralni indeks.
@@ -52,6 +55,7 @@ Ovaj folder je organizovan po domenima, tako da su odluke i specifikacije lakse 
   - `specs/m1-foundation.md` - M1 backend+infra specifikacija i runbook
   - `specs/m2-email-ingest.md` - M2 IMAP/email ingest specifikacija i operativa
   - `specs/m4-ocr-ingest.md` - M4 OCR ingest endpoint i mapiranje na gosta
+  - `specs/ocr-paddle-scan-api.md` - PaddleOCR file scan + MRZ (`POST /api/v1/scan/`) bez auto-updatea gosta
   - `brainstorm/` - radne backend ideje
   - `specs/` - backend specifikacije
 - `frontend/`
